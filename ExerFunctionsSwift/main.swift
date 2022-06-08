@@ -64,9 +64,9 @@ func sum(_ a: Int, _ b:Int) -> Int {
 print(sum(10, 30))
 
 //posso ter quantos paramentros eu quiser e se eu coloco dois nomes para um paramentro ummfica como interno e outro como externo.
-func multiply ( _ number1: Int, by number2: Int) -> Int {
-    return number1 * number2
-}
+//func multiply ( _ number1: Int, by number2: Int) -> Int {
+//    return number1 * number2
+//}
 print(multiply(10, by: 20))
 
       
@@ -96,3 +96,56 @@ func getStudentInfo(_ data: String) -> (name: String, age: Int) { //retorna uma 
 let student = getStudentInfo(studentData)
 print(student.name)
 print(student.age)
+
+
+//Funções (parte2)
+
+//First Class Citizen??-  literal seria cidaão de primeira classe
+//em programacao a gente fala que o objeto é first class citizen quando ele suporta todos os tipos basicos de operacoes
+//isso significa que ele pode ser passado como argumento de uma funcao, ele poode ser retornado por uma funcao, ele pode ser modificado, pode ser atribuido a uma variavel. tudo isso é possivel com int, string, doable..
+//mas sera que eu posso passar uma funcao como argumento de outra funcao? Sera que eu posso retornar uma funcao a partir de outra funcao? ou atribuir uma funcao a uma variavel. bom, em swift iss é possivel.
+//por isso que funcoes em swift são First Class Citizen
+
+func sum1( _ a: Int, _ b: Int) -> Int {
+    return a + b
+}
+
+func subtract( _ a: Int, _ b: Int) -> Int {
+    return a - b
+}
+
+func divide( _ a: Int, _ b: Int) -> Int {
+    return a / b
+}
+
+func multiply( _ a: Int, _ b: Int) -> Int {
+    return a * b
+}
+typealias Op = (Int, Int) -> Int //isso é usado para dar apelidos para tipos.
+
+//o tipo da minha funcao usada no paramentro é a funcao sem os nomes dos paramentros ( _ a: Int, _ b: Int) -> Int é igual a (Int, Int) -> Int : aqui temos uma funcao que aceita outra como parametro
+func applyOperation( _ a: Int, _ b: Int, operation: Op ) -> Int {
+   return operation(a, b)
+}
+
+let result = applyOperation(4, 2, operation: sum)
+print(result)
+
+//evoluir para uma funcao que retorna outra como parametro
+
+func getOperation( _ operation: String) -> Op {
+    switch operation {
+        case "soma":
+            return sum
+        case "subtracao":
+            return subtract
+        case "divisão":
+            return divide
+        default:
+            return multiply
+        }
+}
+
+var operation = getOperation("soma")
+operation(2, 2)
+
