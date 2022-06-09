@@ -67,7 +67,7 @@ print(sum(10, 30))
 //func multiply ( _ number1: Int, by number2: Int) -> Int {
 //    return number1 * number2
 //}
-print(multiply(10, by: 20))
+//print(multiply(10, by: 20))
 
       
 //exemplo de funcao que aceita varios numeros num unico paramentro como fosse um range que vira uma expecie de array
@@ -147,5 +147,116 @@ func getOperation( _ operation: String) -> Op {
 }
 
 var operation = getOperation("soma")
-operation(2, 2)
+//operation(2, 2)
 
+//Closures
+
+//são um recurso poderoso da linguagem em swift usadas intensivamente na linguagem
+//é um pedaco auto contido de código e funcionalidade que podem ser repassados e utilizados em seu codigo
+//closures sao funcoes anonimas que nao possuem nome ...
+//utiliza as closures diretamente ..ela existe em outras linguagens e se chama lambda por exemplo.
+
+
+//sintaxe de uma closure e de uma funcao
+
+//funcao
+
+/*
+ func nome(paramentro: tipoDoParamentro) -> TipoDeRetornoDaFuncao {
+            bloco de codigo
+            ...
+            return TipoDeRetornoDaFuncao
+ */
+
+//closure
+
+/*
+ { (parametro: String) -> String in
+        bloco de codigo
+        ...
+        return String
+ }
+ */
+
+//a closure nao contem nome o paramentro fica dentro da chave e nas closures usamos a palavra reservada in para definir o inicio do bloco de codigo
+
+func sum2(_ a: Int, _ b: Int) -> Int {
+    return a + b
+}
+
+func substract2(_ a: Int, _ b: Int) -> Int {
+    return a - b
+}
+
+//func calculate (_ a: Int, _ b: Int, operation: (Int, Int) -> Int)-> Int {
+//    return operation(a, b)
+//}
+////calculate(10, 20, operation: sum2)
+
+
+//calculate(10, 20, operation: {(a: Int, b: Int) -> Int in
+//    return a*b
+//
+//})
+
+//calculate(10, 20, operation: {(a, b) -> Int in
+//    return a*b
+//
+//})
+//Simplificando, se eu seu que ela devolve um inteiro nao preciso colocar os tipos de a e de b
+
+//calculate(10, 20, operation:{ a, b in
+//    return a*b
+//
+//})
+//simplificando podemos tirar o a e o b e o in , pois para cada argumento eu tenho uma chave/constante que a linguagem me devolve, ela cria sozinha e me empresta  que seria o $ e um numero que representa o indice do argumento.
+//calculate(10, 20, operation: {
+//    return $0/$1
+//
+//})
+
+//Já que minha closure so tem uma linha de codigo e obrigatoriamente ela precisa ser o retorno posso tirar o return
+//calculate(10, 20, operation: { $0/$1 })
+
+//já que estou usando operador binario e ele precisa de dois operando eu não preciso explicitamente colocar os numero entre o operador ficando assim:
+//calculate(10, 20, operation: / ) //mas so usa assim sem as chaves se a closure for o ultimo parametro da sua funcao
+
+//Quando a closure é o ultimo argumento ela permite ser colocada do lado de fora
+
+//calculate(10, 20) { $0/$1 } // deforma forma matamos o "operation:, enao é possivel colocar somente o vezes aqui nesse cenario são necessarios os argumentos junto ao operador binario"
+import Foundation
+var names = [
+    "   Alessandra   ",
+    "   Jessica",
+    "Anderson   ",
+    "Denys  ",
+    "Harley  "
+]
+print(names)
+//map = mapeia os elementos da colecao e devolve uma nova colecao com esses elementos mapeados
+//nesse caso $0 representa cada um desses elementos
+//esse metodo trimmingCharacteres remove alguns caracteres e vem do Foundantion
+//entao estou pegando cada item do meu array $0 e removendo os espacos em branco e isso vai me devolver um novo array
+
+let correctedNames = names.map({$0.trimmingCharacters(in: CharacterSet.whitespaces)}) //retira os espacos em branco
+print(correctedNames)
+
+//fazer o array retonar letras em maiusculo
+
+let uppercaseNames = correctedNames.map({$0.uppercased()})
+print(uppercaseNames)
+
+let rodrigues = correctedNames.map({$0 + " Rodrigues"})
+print(rodrigues)
+
+//filter - devolve elementos que cumprem um certo requisito
+
+//pega cada elemento do array e devolve um novo array somente com elemntos com menos de 7 letras
+let newNames = correctedNames.filter({$0.count < 7})
+print(newNames)
+
+
+//Reduce
+
+//let sumLetters = correctedNames.reduce(0, {$0 + $1.count})
+//print(sumLetters) //retona 36 
